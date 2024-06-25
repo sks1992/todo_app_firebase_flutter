@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "741479704423",
+    "project_id": "demo8-a9f7a",
+    "storage_bucket": "demo8-a9f7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741479704423:android:b6ae10d725ee3d42bc71c2",
+        "android_client_info": {
+          "package_name": "com.crud.app.todo_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlmRBTOzjXXaOOD5_0HWGRITXHs0gHwOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
