@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_project/core/constants/helper.dart';
 import 'package:todo_project/core/model/user_model.dart';
+import 'package:todo_project/core/services/firebase_services.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../ui/widgets/text_input.dart';
 
@@ -26,13 +28,18 @@ class UserController extends GetxController with StateMixin<List<UserModel>> {
     emailController.dispose();
   }
 
-  void addUser() {
+  void addUser() async {
+    hideKeyboard();
+    isLoading.value = true;
     var model = UserModel(
-        userName: userNameController.text, email: emailController.text);
+        uid: const Uuid().v1(),
+        userName: userNameController.text,
+        email: emailController.text);
     userList.add(model);
+    await FirestoreMethods().uploadUser(model.uid, model.userName, model.email);
+    isLoading.value = true;
     userNameController.text = "";
     emailController.text = "";
-    hideKeyboard();
     Get.back();
   }
 
@@ -40,7 +47,7 @@ class UserController extends GetxController with StateMixin<List<UserModel>> {
     userList.removeAt(index);
   }
 
-  void showEditDialog(String userName, String email, int index) {
+  void showEditDialog(String userId, String userName, String email, int index) {
     userNameController.text = userName;
     emailController.text = email;
     Get.defaultDialog(
@@ -73,6 +80,7 @@ class UserController extends GetxController with StateMixin<List<UserModel>> {
                   ElevatedButton(
                       onPressed: () {
                         var model = UserModel(
+                            uid: userId,
                             userName: userNameController.text,
                             email: emailController.text);
                         userList[index] = model;

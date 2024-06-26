@@ -46,7 +46,7 @@ class UserScreen extends StatelessWidget {
                                 children: [
                                   IconButton(
                                       onPressed: () {
-                                        _controller.showEditDialog(
+                                        _controller.showEditDialog(user.uid,
                                             user.userName, user.email, index);
                                       },
                                       icon: const Icon(Icons.edit)),
@@ -101,24 +101,28 @@ class UserScreen extends StatelessWidget {
                 controller: _controller.emailController,
                 labelText: 'Email',
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      _controller.userNameController.text = "";
-                      _controller.emailController.text = "";
-                      Get.back();
-                    },
-                    child: const Text("Close"),
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        _controller.addUser();
-                      },
-                      child: const Text("Add User")),
-                ],
-              )
+              Obx(
+                () => _controller.isLoading.value
+                    ? const LinearProgressIndicator()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              _controller.userNameController.text = "";
+                              _controller.emailController.text = "";
+                              Get.back();
+                            },
+                            child: const Text("Close"),
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                _controller.addUser();
+                              },
+                              child: const Text("Add User")),
+                        ],
+                      ),
+              ),
             ],
           ),
         ),
